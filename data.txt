@@ -1,0 +1,3 @@
+amazon | sudesh@gmail.com | 1234
+facebook | sudesh@gmail.com | sudesh123
+github | sudesh@gmail.com | sud_git_123
