@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 import random
 
 FONT = ("Arial", 12, "bold")
@@ -86,6 +87,7 @@ def generate_random_password():
 
 def generate_password():
     password = generate_random_password()
+    password_entry.delete(0, END)
     password_entry.insert(0, password)
 
 
@@ -96,6 +98,21 @@ def save():
     website = website_entry.get()
     email = email_entry.get()
     password = password_entry.get()
+
+    if not website or not email or not password:
+        messagebox.showerror(
+            title="Error!",
+            message="Please make sure you haven't left any fields empty.",
+        )
+        return
+
+    save_ok = messagebox.askokcancel(
+        title=website,
+        message=f"These are the details entered :\nEmail : {email}\nPassword : {password}\n\nIs it okay to save?",
+    )
+
+    if not save_ok:
+        return
 
     with open(file="data.txt", mode="a") as file:
         file.write(f"{website} | {email} | {password}\n")
