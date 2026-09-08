@@ -1,9 +1,10 @@
 from tkinter import *
 from tkinter import messagebox
 import random
+import json
 
 FONT = ("Arial", 12, "bold")
-FILE_NAME = "data.txt"
+FILE_NAME = "data.json"
 
 NUMBERS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
@@ -94,6 +95,18 @@ def generate_password():
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
 
+def confirmation_to_save(user_data, website):
+    save_ok = messagebox.askokcancel(
+        title=website,
+        message=f"These are the details entered :\nEmail : {user_data["email"]}\nPassword : {user_data["password"]}\n\nIs it okay to save?",
+    )
+
+    if save_ok:
+        return True
+
+    return False
+
+
 def save():
     website = website_entry.get()
     email = email_entry.get()
@@ -106,16 +119,13 @@ def save():
         )
         return
 
-    save_ok = messagebox.askokcancel(
-        title=website,
-        message=f"These are the details entered :\nEmail : {email}\nPassword : {password}\n\nIs it okay to save?",
-    )
+    new_data = {website: {"email": email, "password": password}}
 
-    if not save_ok:
+    if not confirmation_to_save(website=website, user_data=new_data[website]):
         return
 
-    with open(file="data.txt", mode="a") as file:
-        file.write(f"{website} | {email} | {password}\n")
+    with open(file=FILE_NAME, mode="w") as file:
+        json.dump(new_data, file, indent=4)
         website_entry.delete(0, END)
         password_entry.delete(0, END)
 
