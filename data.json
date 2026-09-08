@@ -1,6 +1,14 @@
 {
-    "amazon": {
+    "asd": {
         "email": "sudesh@gmail.com",
-        "password": "UW#1Y)$23Z*5lnT0"
+        "password": "asd"
+    },
+    "dsa": {
+        "email": "sudesh@gmail.com",
+        "password": "dsa"
+    },
+    "c": {
+        "email": "sudesh@gmail.com",
+        "password": "df"
     }
 }

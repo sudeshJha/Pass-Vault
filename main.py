@@ -107,6 +107,24 @@ def confirmation_to_save(user_data, website):
     return False
 
 
+def read_file():
+    try:
+        file = open(FILE_NAME, mode="r")
+        return json.load(file)
+    except:
+        file = open(FILE_NAME, mode="w")
+        json.dump({}, file, indent=4)
+        return {}
+    finally:
+        file.close()
+
+
+def update_file(new_data, data):
+    with open(FILE_NAME, mode="w") as file:
+        data.update(new_data)
+        json.dump(data, file, indent=4)
+
+
 def save():
     website = website_entry.get()
     email = email_entry.get()
@@ -123,11 +141,15 @@ def save():
 
     if not confirmation_to_save(website=website, user_data=new_data[website]):
         return
-
-    with open(file=FILE_NAME, mode="w") as file:
-        json.dump(new_data, file, indent=4)
-        website_entry.delete(0, END)
-        password_entry.delete(0, END)
+    print("1111111111111111111111111111111111111111111")
+    data = read_file()
+    print("~~~~~~~~~~~~", data, "------------------")
+    update_file(data=data, new_data=new_data)
+    website_entry.delete(0, END)
+    password_entry.delete(0, END)
+    # with open(file=FILE_NAME, mode="r") as file:
+    # json.dump(new_data, file, indent=4)  # write to the file
+    # json.load(file) # to read a json file
 
 
 # ---------------------------- UI SETUP ------------------------------- #
