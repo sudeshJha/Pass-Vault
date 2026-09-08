@@ -1,14 +1,22 @@
 {
-    "asd": {
+    "amazon": {
         "email": "sudesh@gmail.com",
-        "password": "asd"
+        "password": "Qf9S)OE49F1h&V3*C!h"
     },
-    "dsa": {
+    "oracle": {
         "email": "sudesh@gmail.com",
-        "password": "dsa"
+        "password": "PyBu%)09V69Lwh3d1"
     },
-    "c": {
+    "aws console": {
         "email": "sudesh@gmail.com",
-        "password": "df"
+        "password": "D91r!qU%I79i1ek2"
+    },
+    "flipkart": {
+        "email": "sudesh@gmail.com",
+        "password": "57CO0AH^H&45(5bj"
+    },
+    "aws": {
+        "email": "sudesh@gmail.com",
+        "password": "5Jb!1Bob)^54p(9c3"
     }
 }

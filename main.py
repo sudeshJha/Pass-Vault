@@ -126,7 +126,7 @@ def update_file(new_data, data):
 
 
 def save():
-    website = website_entry.get()
+    website = website_entry.get().lower()
     email = email_entry.get()
     password = password_entry.get()
 
@@ -141,15 +141,35 @@ def save():
 
     if not confirmation_to_save(website=website, user_data=new_data[website]):
         return
-    print("1111111111111111111111111111111111111111111")
+
     data = read_file()
-    print("~~~~~~~~~~~~", data, "------------------")
     update_file(data=data, new_data=new_data)
     website_entry.delete(0, END)
     password_entry.delete(0, END)
-    # with open(file=FILE_NAME, mode="r") as file:
-    # json.dump(new_data, file, indent=4)  # write to the file
-    # json.load(file) # to read a json file
+
+
+# ---------------------------- SEARCH UP ------------------------------- #
+def search():
+    data = read_file()
+    website = website_entry.get().lower()
+
+    try:
+        if not website:
+            raise NameError
+
+        user_data = data[website]
+
+    except NameError:
+        messagebox.showerror(
+            title="Search Error", message="Please enter the website name"
+        )
+    except KeyError:
+        messagebox.showerror(title="Search Error", message="Data not found")
+    else:
+        messagebox.showinfo(
+            title=website,
+            message=f"Email : {user_data["email"]}\nPassword : {user_data["password"]}",
+        )
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -164,32 +184,33 @@ canvas.create_image(100, 100, image=logo_img)
 canvas.grid(row=0, column=1)
 
 # Labels
-website_label = Label(text="Website:")
+website_label = Label(text="Website :")
 website_label.grid(row=1, column=0)
-email_label = Label(text="Email/Username:")
+email_label = Label(text="Email :")
 email_label.grid(row=2, column=0)
-password_label = Label(text="Password:")
+password_label = Label(text="Password :")
 password_label.grid(row=3, column=0)
 
 # Entries
-website_entry = Entry(width=40)
-website_entry.grid(row=1, column=1, columnspan=2)
+website_entry = Entry(width=30)
+website_entry.grid(row=1, column=1)
 website_entry.focus()
 
-email_entry = Entry(width=40)
-email_entry.grid(row=2, column=1, columnspan=2)
+email_entry = Entry(width=30)
+email_entry.grid(row=2, column=1)
 email_entry.insert(0, "sudesh@gmail.com")
 
-password_entry = Entry(width=40)
-password_entry.grid(row=3, column=1, columnspan=2)
+password_entry = Entry(width=30)
+password_entry.grid(row=3, column=1)
 
 # Buttons
-generate_password_button = Button(
-    text="Generate Password", width=20, command=generate_password
-)
-generate_password_button.grid(row=4, column=1, columnspan=2)
+search_button = Button(text="Search", command=search, width=13)
+search_button.grid(row=1, column=2)
 
-add_button = Button(text="Add", width=50, command=save)
-add_button.grid(row=5, column=0, columnspan=3)
+generate_password_button = Button(text="Generate", command=generate_password, width=13)
+generate_password_button.grid(row=3, column=2)
+
+add_button = Button(text="Add", width=40, command=save)
+add_button.grid(row=5, column=1, columnspan=2)
 
 window.mainloop()
